@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Palindrome Checker</title>
+</head>
+<body>
+    <h1>Palindrome Checker</h1>
+    
+    <input id="text-input" type="text" placeholder="Enter text here...">
+    <button id="check-btn">Check</button>
+    
+    <div id="result"></div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
+
+<!--公式による「正解」-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palindrome Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <img class="logo" src="https://plus.unsplash.com/premium_photo-1685086785054-d047cdc0e525?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" >
+    <h1 class="title">Is it a Palindrome?</h1>
+    <div class="palindrome-div">
+      <label for="text-input">Enter in text to check for a palindrome:</label>
+      <input id="text-input" class="palindrome-input" value="" type="text">
+      <button id="check-btn" class="palindrome-btn">Check</button>
+      <div id="result" class="results-div hidden"></div>
+    </div>
+    <div class="palindrome-definition-div">
+      <p class="palindrome-definition">
+        <span role="img" aria-label="light-bulb">💡</span>
+        A <dfn>palindrome</dfn> is a word or sentence that's spelled the same way both forward and backward, ignoring punctuation, case, and spacing.
+      </p>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
