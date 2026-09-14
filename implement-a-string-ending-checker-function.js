@@ -1,0 +1,5 @@
+function confirmEnding(str,target) {
+    const targetLength= target.length;
+    const ending = str.slice(-targetLength);
+    return ending === target;
+}
