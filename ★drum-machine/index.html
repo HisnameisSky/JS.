@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>A Drum Machine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center m-0">
+
+  <!-- 要件 1: id="drum-machine" -->
+  <div id="drum-machine" class="bg-slate-800 p-8 rounded-xl shadow-2xl flex flex-col items-center gap-6 border border-slate-700 max-w-md w-full">
+    <h1 class="text-2xl font-bold tracking-wider text-slate-300">DRUM MACHINE</h1>
+
+    <!-- 要件 3: id="display" の p 要素 -->
+    <p id="display" class="bg-slate-950 border border-slate-700 text-cyan-400 w-full h-14 rounded-lg flex items-center justify-center font-mono text-xl shadow-inner font-bold tracking-wide">
+      Select a Pad
+    </p>
+
+    <!-- 要件 2: id="pad-bank" の div 要素 -->
+    <div id="pad-bank" class="grid grid-cols-3 gap-4 w-full">
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Heater-1" onclick="play('Q', 'Heater-1')">
+        Q
+        <audio class="clip" id="Q" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-1.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Heater-2" onclick="play('W', 'Heater-2')">
+        W
+        <audio class="clip" id="W" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-2.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Heater-3" onclick="play('E', 'Heater-3')">
+        E
+        <audio class="clip" id="E" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-3.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Heater-4" onclick="play('A', 'Heater-4')">
+        A
+        <audio class="clip" id="A" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-4_1.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Clap" onclick="play('S', 'Clap')">
+        S
+        <audio class="clip" id="S" src="https://cdn.freecodecamp.org/curriculum/drum/Heater-6.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Open-HH" onclick="play('D', 'Open-HH')">
+        D
+        <audio class="clip" id="D" src="https://cdn.freecodecamp.org/curriculum/drum/Dsc_Oh.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Kick-n-Hat" onclick="play('Z', 'Kick-n-Hat')">
+        Z
+        <audio class="clip" id="Z" src="https://cdn.freecodecamp.org/curriculum/drum/Kick_n_Hat.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Kick" onclick="play('X', 'Kick')">
+        X
+        <audio class="clip" id="X" src="https://cdn.freecodecamp.org/curriculum/drum/RP4_KICK_1.mp3"></audio>
+      </button>
+      <button class="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 transition-all text-white font-bold py-6 text-2xl rounded-lg border border-slate-600 select-none" id="Closed-HH" onclick="play('C', 'Closed-HH')">
+        C
+        <audio class="clip" id="C" src="https://cdn.freecodecamp.org/curriculum/drum/Cev_H2.mp3"></audio>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 1. クリック/キー押下共通の再生・文字変更処理
+    function play(key, soundId) {
+      var audio = document.getElementById(key);
+      if (audio) {
+        audio.currentTime = 0;
+        var promise = audio.play();
+        if (promise !== undefined) {
+          promise.catch(function() {});
+        }
+      }
+      
+      var display = document.getElementById('display');
+      if (display) {
+        display.innerText = soundId;
+      }
+    }
+
+    // 2. keydown イベントで確実に捕捉
+    document.addEventListener('keydown', function(event) {
+      if (!event.key) return;
+      var keyUpper = event.key.toUpperCase();
+      var audio = document.getElementById(keyUpper);
+      
+      if (audio) {
+        var parentButton = audio.parentElement;
+        var soundId = parentButton ? parentButton.id : keyUpper;
+        play(keyUpper, soundId);
+      }
+    });
+  </script>
+
+  <!-- fcc テストスクリプト -->
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+</html>

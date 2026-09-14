@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drum Machine</title>
+  
+  <!-- React, ReactDOM, Babel, Tailwind CSS (スタイリング用) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background-color: #1e293b;
+      color: white;
+      font-family: sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reactアプリのルート要素 -->
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // ドラムパッドのデータ定義
+    const drumPads = [
+      { key: 'Q', id: 'Heater 1', src: 'https://cdn.freecodecamp.org/curriculum/drum/Heater-1.mp3' },
+      { key: 'W', id: 'Heater 2', src: 'https://cdn.freecodecamp.org/curriculum/drum/Heater-2.mp3' },
+      { key: 'E', id: 'Heater 3', src: 'https://cdn.freecodecamp.org/curriculum/drum/Heater-3.mp3' },
+      { key: 'A', id: 'Heater 4', src: 'https://cdn.freecodecamp.org/curriculum/drum/Heater-4_1.mp3' },
+      { key: 'S', id: 'Clap', src: 'https://cdn.freecodecamp.org/curriculum/drum/Heater-6.mp3' },
+      { key: 'D', id: 'Open-HH', src: 'https://cdn.freecodecamp.org/curriculum/drum/Dsc_Oh.mp3' },
+      { key: 'Z', id: "Kick-n'-Hat", src: 'https://cdn.freecodecamp.org/curriculum/drum/Kick_n_Hat.mp3' },
+      { key: 'X', id: 'Kick', src: 'https://cdn.freecodecamp.org/curriculum/drum/RP4_KICK_1.mp3' },
+      { key: 'C', id: 'Closed-HH', src: 'https://cdn.freecodecamp.org/curriculum/drum/Cev_H2.mp3' }
+    ];
+
+    const App = () => {
+      const [displayText, setDisplayText] = React.useState('Drum Machine');
+
+      // サウンド再生およびディスプレイ表示をトリガーする共通関数
+      const playSound = (key, soundDescription) => {
+        const audio = document.getElementById(key);
+        if (audio) {
+          audio.currentTime = 0; // 連続打鍵用に再生位置を頭出し
+          audio.play();
+          setDisplayText(soundDescription);
+        }
+      };
+
+      // キーボード操作のイベントハンドラ
+      React.useEffect(() => {
+        const handleKeyDown = (e) => {
+          const keyUpper = e.key.toUpperCase();
+          const targetPad = drumPads.find(pad => pad.key === keyUpper);
+          if (targetPad) {
+            playSound(targetPad.key, targetPad.id);
+          }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+      }, []);
+
+      return (
+        /* 要件 1: id="drum-machine" */
+        <div id="drum-machine" className="bg-slate-800 p-8 rounded-xl shadow-2xl flex flex-col items-center gap-6 border border-slate-700 max-w-md w-full">
+          
+          <h1 className="text-2xl font-bold tracking-wider text-slate-300">DRUM MACHINE</h1>
+
+          {/* 要件 3: id="display" の p 要素 */}
+          <p id="display" className="bg-slate-900 border border-slate-700 text-cyan-400 w-full h-14 rounded-lg flex items-center justify-center font-mono text-xl shadow-inner font-bold tracking-wide">
+            {displayText}
+          </p>
+
+          {/* 要件 2: id="pad-bank" の div 要素 */}
+          <div id="pad-bank" className="grid grid-cols-3 gap-4 w-full">
+            {drumPads.map((pad) => (
+              /* 要件 4, 5, 6: クラスが drum-pad の button 要素。IDは一意で内部テキストは Q,W,E... */
+              <button
+                key={pad.key}
+                id={pad.id}
+                className="drum-pad bg-slate-700 hover:bg-slate-600 active:bg-cyan-600 active:scale-95 transition-all text-white font-bold py-6 text-2xl rounded-lg shadow-md border border-slate-600 flex justify-center items-center select-none"
+                onClick={() => playSound(pad.key, pad.id)}
+              >
+                {pad.key}
+                {/* 要件 7: クラスが clip の audio 要素 (id="Q" など) */}
+                <audio
+                  className="clip"
+                  id={pad.key}
+                  src={pad.src}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+  <!-- freeCodeCamp の公式テスト実行スクリプト（ローカル検証用） -->
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+</html>
